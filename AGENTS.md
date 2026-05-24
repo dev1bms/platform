@@ -1,3 +1,13 @@
+## Required project context
+
+Before implementing features, always read and follow:
+
+- PROJECT_KNOWLEDGE.md
+
+This file defines the product vision, current website structure, content model direction, milestones, and implementation rules.
+
+
+
 # DevBMS Platform - Development Guide
 
 This is the personal Django platform for devbms.com.

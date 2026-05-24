@@ -26,3 +26,4 @@ local_settings.py
 # Docker volumes
 postgres-data/
 redis-data/
+.aider*

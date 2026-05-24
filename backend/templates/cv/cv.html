@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CV - {{ profile.full_name }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .contact-info {
+            margin: 10px 0;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .experience-item, .education-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .experience-item:last-child, .education-item:last-child {
+            border-bottom: none;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .skill-item {
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .current {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <h1>{{ profile.full_name }}</h1>
+            <p class="contact-info">{{ profile.short_bio }}</p>
+            <p class="contact-info">📧 {{ profile.email }} | 📞 {{ profile.phone }}</p>
+            {% if profile.address %}
+                <p class="contact-info">📍 {{ profile.address }}</p>
+            {% endif %}
+            {% if profile.linkedin_url or profile.github_url or profile.twitter_url %}
+                <p class="contact-info">
+                    {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank">LinkedIn</a> | {% endif %}
+                    {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank">GitHub</a> | {% endif %}
+                    {% if profile.twitter_url %}<a href="{{ profile.twitter_url }}" target="_blank">Twitter</a>{% endif %}
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                {% for skill in skills %}
+                    <div class="skill-item">
+                        <strong>{{ skill.name }}</strong> 
+                        <span>({{ skill.get_level_display }})</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Experience</h2>
+            {% for experience in experiences %}
+                <div class="experience-item">
+                    <h3>{{ experience.position }}</h3>
+                    <p><strong>{{ experience.company }}</strong> 
+                        {% if experience.is_current %}<span class="current">(Current)</span>{% endif %}
+                    </p>
+                    <p><em>{{ experience.start_date }} - {{ experience.end_date|default:"Present" }}</em></p>
+                    <p>{{ experience.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            {% for education in educations %}
+                <div class="education-item">
+                    <h3>{{ education.degree }}</h3>
+                    <p><strong>{{ education.institution }}</strong></p>
+                    <p><em>{{ education.start_date }} - {{ education.end_date|default:"Present" }}</em></p>
+                    <p>{{ education.field_of_study }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>Languages</h2>
+            {% for language in languages %}
+                <div class="experience-item">
+                    <h3>{{ language.name }}</h3>
+                    <p><em>{{ language.get_proficiency_display }}</em></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
